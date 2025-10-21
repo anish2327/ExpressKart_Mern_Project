@@ -2,7 +2,8 @@ import React from 'react'
 import  { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import {BsCloudUpload} from "react-icons/bs"
-import { ImagetoBase64 } from '../hooks/ImagetoVase64'
+
+import { ImagetoBase64 } from '../component/hooks/ImagetoVase64'
 
 
 function Newproduct() {
@@ -101,7 +102,9 @@ function Newproduct() {
           <option value={"panner"}>Panner</option>
           <option value={"sandwich"}>Sandwich</option>
           <option value={"egg"}>Egg</option>
-           <option value={"chocalate"}>Chocalate</option>
+          <option value={"chocalate"}>Chocalate</option>
+          <option value={"drink"}>Drinks</option>
+        
            
         </select>
 

@@ -5,10 +5,12 @@ const SelectLocation = () => {
     country: "",
     state: "",
     city: "",
-    detected: "",
+    houseNo: "",
+    pincode :"",
   });
 
-  // Example static data (you can replace with dynamic API data)
+  const [savedLocation, setSavedLocation] = useState("");
+
   const countries = {
     India: ["Uttar Pradesh", "Maharashtra", "Delhi", "Gujrat"],
     USA: ["California", "Texas", "New York"],
@@ -22,9 +24,11 @@ const SelectLocation = () => {
     Texas: ["Dallas", "Houston"],
     "New York": ["NYC", "Buffalo"],
   };
+  const houseNO= {
+
+  }
 
 
-  // Handle manual select
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLocation((prev) => ({
@@ -35,34 +39,21 @@ const SelectLocation = () => {
     }));
   };
 
-  // Detect current location
-  const handleDetectLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const { latitude, longitude } = position.coords;
-          try {
-            const res = await fetch(
-              `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`
-            );
-            const data = await res.json();
-            setLocation((prev) => ({
-              ...prev,
-              detected: `${data.address.city || data.address.town || ""}, ${data.address.state}, ${data.address.country}`,
-            }));
-          } catch (err) {
-            console.error("Error fetching location:", err);
-          }
-        },
-        (error) => {
-          alert("Please allow location access.");
-          console.error(error);
-        }
-      );
-    } else {
-      alert("Geolocation not supported by your browser.");
+
+  const handleSaveAddress = (e) => {
+    e.preventDefault();
+    const { country, state, city, houseNo, pincode } = location;
+
+    if (!country || !state || !city) {
+      alert("⚠️ Please select all fields before saving.");
+      return;
     }
+
+    const formattedLocation = ` ${houseNo} ,${city}, ${state}, ${country} - ${pincode}`;
+    setSavedLocation(formattedLocation);
+    localStorage.setItem("savedLocation", formattedLocation); // ✅ Save permanently
   };
+
 
   return (
     <div className="p-4 max-w-md mx-auto rounded-2xl shadow-md bg-white">
@@ -118,18 +109,40 @@ const SelectLocation = () => {
         </>
       )}
 
-      {/* Detect current location */}
+      <label  className="block mb-2 font-medium"> PIN code</label>
+        <input
+        type="text"
+        name="pincode"
+        value={location.pincode}
+        onChange={handleChange}
+        placeholder="Enter your PIN code number "
+        className="border rounded-lg p-2 w-full mb-3"
+        />
+
+      <label className="block mb-2 font-medium">House No. / Address Line:</label>
+      <input
+        type="text"
+        name="houseNo"
+        value={location.houseNo}
+        onChange={handleChange}
+        placeholder="Enter your house number or address"
+        className="border rounded-lg p-2 w-full mb-3"
+        />
+        
+
+     {/* Save Address Button */}
       <button
-        onClick={handleDetectLocation}
+        onClick={handleSaveAddress}
         className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition"
       >
-        Detect My Location
+        Save Address
       </button>
 
-      {location.detected && (
-        <p className="mt-3 text-green-600 font-medium">
-          📍 Detected Location: {location.detected}
-        </p>
+      {/* Display Saved Location */}
+      {savedLocation && (
+        <div className="mt-4 p-3 border rounded-lg bg-green-50 text-green-700">
+          <strong>📍 Saved Location:</strong> {savedLocation}
+        </div>
       )}
     </div>
   );

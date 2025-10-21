@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutRedux } from "../redux/userSlice";
 import { toast } from "react-hot-toast";
 
+
 import Search from './Search';
 
 const Header = () => {
@@ -50,22 +51,27 @@ const Header = () => {
             {/* Navigation & Icons */}
             <div className='flex items-center gap-4 md:gap-7'>
                 <nav className='gap-4 md:gap-6 text-base md:text-lg hidden md:flex'>
-                    <Link to="/">Home</Link>
-                    <Link to="selectlocation">Select location📍</Link>
+                    <Link to="/" className='text-orange-500 hover:text-blue-600'>Home</Link>
+                        <Link to="/selectlocation"  className="hover:text-blue-600 text-orange-500">
+                            Select Location📍
+                        </Link>
+                       
+                        
+                      
 
                     {/* Show login only if user not logged in */}
                    
 
                     {!userData.email ? (
-                      <Link to="login" className='whitespace-nowrap cursor-pointer'>Login</Link>
+                      <Link to="login" className=' text-orange-500 whitespace-nowrap cursor-pointer hover:text-blue-600'>Login</Link>
                     ) : (
                       <button onClick={handleLogout}
-                                    className='whitespace-nowrap cursor-pointer hover:text-red-600'>Logout</button>
+                                    className='whitespace-nowrap cursor-pointer text-orange-600'>Logout</button>
                     )}
                 </nav>
 
                 {/* Cart Icon */}
-                <div className='text-3xl text-slate-600 relative'>
+                <div className=' text-orange-500 text-3xl hover:text-blue-600 text-slate-600 relative'>
                     <Link to="cart">
                         <FaShoppingCart />
                         {cartItemNumber > 0 && (
@@ -83,10 +89,10 @@ const Header = () => {
                             <HiOutlineUserCircle />
                            
                         </div>
-                        <div className='text-center text-2xl'>
+                        <div className=' text-orange-600 text-center text-2xl'>
                             <Link
                                     to="profile"
-                                    className='whitespace-nowrap cursor-pointer mb-2  hover:text-red-600'
+                                    className='whitespace-nowrap cursor-pointer mb-2  text-orange-600  hover:text-red-600'
                                     onClick={() => setShowMenu(false)}
                                 >
                                 Profile
@@ -107,7 +113,7 @@ const Header = () => {
                                 {isAdmin && (
                                     <Link
                                         to="newproduct"
-                                        className='whitespace-nowrap cursor-pointer mb-2'
+                                        className='whitespace-nowrap cursor-pointer mb-2 text-orange-600'
                                         onClick={() => setShowMenu(false)}
                                     >
                                         🛠 New Product
