@@ -12,7 +12,7 @@ export const createCheckoutSession = async (req, res) => {
       mode: "payment",
       payment_method_types: ["card"],
       billing_address_collection: "auto",
-      shipping_options: [{ shipping_rate: "shr_1SINbi2LQs9u2BU4qdieA7sv" }],
+      shipping_options: [{ shipping_rate: "shr_1SKsTv2KYmopSTftz16fe58b" }],
 
       line_items: req.body.map((item) => ({
         price_data: {
