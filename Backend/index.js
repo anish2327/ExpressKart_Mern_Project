@@ -17,13 +17,23 @@ dotenv.config();
 const app = express()
 app.use(express.json()); // ✅ This line is essential
 
-app.use(cors({
-    origin: process.env.FRONTEND_URL,
+const allowedOrigins = process.env.FRONTEND_URL.split(",");
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        console.log("❌ Blocked by CORS:", origin);
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
-    
+  })
+);
 
-}))
 
 app.use(cookieParser())
 app.use(morgan("dev"))
