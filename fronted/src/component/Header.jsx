@@ -69,6 +69,14 @@ const Header = () => {
                                     className='whitespace-nowrap cursor-pointer text-orange-600'>Logout</button>
                     )}
                 </nav>
+                {/* if used mobile version then login show  */}
+                    <div className='flex md:hidden'>
+                                {!userData.email ? (
+                                    <Link to="login" className='text-orange-500 hover:text-blue-600'>Login</Link>
+                                ) : (
+                                    <button onClick={handleLogout} className='text-orange-500 hover:text-blue-600'>Logout</button>
+                                )}
+                            </div>
 
                 {/* Cart Icon */}
                 <div className=' text-orange-500 text-3xl hover:text-blue-600 text-slate-600 relative'>
