@@ -22,28 +22,42 @@ const Cart = () => {
 
   
   
-  const handlePayment = async()=>{
-    console.log("User state:", user);
-    console.log("email",user.email);
-
-
-        if (user && user.email) {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/create-checkout-session`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(productCartItem),
-        });
-
-        if (res.status === 500) return;
-        const data = await res.json();
-
-        toast("Redirecting to payment gateway...");
-        window.location.href = data.url; // ✅ new way
-      } else {
-         toast("You have not Login!");
-      setTimeout(() => navigate("/login"), 1000);
-      }
+  const handlePayment = async () => {
+  if (!user || !user.email) {
+    toast("You are not logged in!");
+    setTimeout(() => navigate("/login"), 1000);
+    return;
   }
+
+  try {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/create-checkout-session`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(productCartItem),
+    });
+
+    if (!res.ok) {
+      toast("Payment session could not be created!");
+      console.error("Backend error:", await res.text());
+      return;
+    }
+
+    const data = await res.json();
+
+    if (!data.url) {
+      toast("Payment session URL missing!");
+      console.error("Stripe session URL:", data);
+      return;
+    }
+
+    toast("Redirecting to payment gateway...");
+    window.location.href = data.url;
+  } catch (err) {
+    console.error("Checkout error:", err);
+    toast("Something went wrong!");
+  }
+};
+
   return (
     <>
     
