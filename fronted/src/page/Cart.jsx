@@ -28,6 +28,10 @@ const Cart = () => {
     setTimeout(() => navigate("/login"), 1000);
     return;
   }
+     if (totalPrice < 50) {
+  toast("Minimum payment amount for Stripe is ₹50");
+  return;
+}
 
   try {
     const res = await fetch(`${import.meta.env.VITE_API_URL}/create-checkout-session`, {
