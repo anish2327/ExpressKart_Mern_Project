@@ -51,7 +51,7 @@ const SelectLocation = () => {
 
     const formattedLocation = ` ${houseNo} ,${city}, ${state}, ${country} - ${pincode}`;
     setSavedLocation(formattedLocation);
-    localStorage.setItem("savedLocation", formattedLocation); // ✅ Save permanently
+    localStorage.setItem("savedLocation", formattedLocation); 
   };
 
 

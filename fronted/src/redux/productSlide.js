@@ -12,13 +12,13 @@ export const productSlice = createSlice({
   reducers: {
     setDataProduct: (state, action) => {
       state.productList = [...action.payload];
-        },
-        addCartItem: (state, action) => {
+    },
+    addCartItem: (state, action) => {
       const check = state.cartItem.some((el) => el._id === action.payload._id);
       if (check) {
         toast("Already Item in Cart");
       } else {
-        toast("Item Add successfully");
+        toast("Item Added Successfully");
         const total = action.payload.price;
         state.cartItem = [
           ...state.cartItem,
@@ -27,33 +27,24 @@ export const productSlice = createSlice({
       }
     },
     deleteCartItem: (state, action) => {
-      toast("one Item Delete");
       const index = state.cartItem.findIndex((el) => el._id === action.payload);
-      state.cartItem.splice(index, 1);
-      console.log(index);
+      if (index !== -1) {
+        state.cartItem.splice(index, 1);
+        toast("Item Deleted");
+      }
     },
     increaseQty: (state, action) => {
       const index = state.cartItem.findIndex((el) => el._id === action.payload);
-      let qty = state.cartItem[index].qty;
-      const qtyInc = ++qty;
-      state.cartItem[index].qty = qtyInc;
-
-      const price = state.cartItem[index].price;
-      const total = price * qtyInc;
-
-      state.cartItem[index].total = total;
+      if (index === -1) return;
+      state.cartItem[index].qty += 1;
+      state.cartItem[index].total = state.cartItem[index].price * state.cartItem[index].qty;
     },
     decreaseQty: (state, action) => {
       const index = state.cartItem.findIndex((el) => el._id === action.payload);
-      let qty = state.cartItem[index].qty;
-      if (qty > 1) {
-        const qtyDec = ++qty;
-        state.cartItem[index].qty = qtyDec;
-
-        const price = state.cartItem[index].price;
-        const total = price * qtyDec;
-
-        state.cartItem[index].total = total;
+      if (index === -1) return;
+      if (state.cartItem[index].qty > 1) {
+        state.cartItem[index].qty -= 1; // ✅ fix
+        state.cartItem[index].total = state.cartItem[index].price * state.cartItem[index].qty;
       }
     },
   },
@@ -67,4 +58,4 @@ export const {
   decreaseQty,
 } = productSlice.actions;
 
-export default productSlice.reducer;
+export default productSlice.reducer

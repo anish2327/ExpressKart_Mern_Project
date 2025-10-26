@@ -21,10 +21,12 @@ const Profile = () => {
   const menuItems = [
     { id: "profile", label: "Profile Info" },
     { id: "orders", label: "Your Orders" },
+    {id: "savedaddres", label: "Save Address"},
     { id: "payments", label: "Payment History" },
     { id: "support", label: "Help & Support" },
     { id: "about", label: "About Us" },
     { id: "logout", label: "Logout" },
+   
   ];
   console.log(user)
   console.log(user.email);
@@ -128,3 +130,74 @@ const Profile = () => {
 };
 
 export default Profile;
+// import React, { useState } from "react";
+// import { useSelector, useDispatch } from "react-redux";
+// import { useNavigate } from "react-router-dom";
+// import { toast } from "react-hot-toast";
+
+// import ProfileInfo from "./ProfileTabs/ProfileInfo";
+// import Orders from "./ProfileTabs/Orders";
+// import Payments from "./ProfileTabs/Payments";
+// import Support from "./ProfileTabs/Support";
+// import About from "./ProfileTabs/About";
+
+// const Profile = () => {
+//   const user = useSelector((state) => state.user);
+//   const navigate = useNavigate();
+//   const dispatch = useDispatch();
+
+//   const [activeTab, setActiveTab] = useState("profile");
+
+//   const handleLogout = () => {
+//     localStorage.removeItem("token");
+//     dispatch({ type: "LOGOUT" });
+//     toast.success("Logged out successfully!");
+//     navigate("/login");
+//   };
+
+//   const menuItems = [
+//     { id: "profile", label: "Profile Info" },
+//     { id: "orders", label: "Your Orders" },
+//     { id: "payments", label: "Payment History" },
+//     { id: "support", label: "Help & Support" },
+//     { id: "about", label: "About Us" },
+//     { id: "logout", label: "Logout" },
+//   ];
+
+//   const tabComponents = {
+//     profile: <ProfileInfo user={user} />,
+//     orders: <Orders />,
+//     payments: <Payments />,
+//     support: <Support />,
+//     about: <About />,
+//   };
+
+//   return (
+//     <div className="flex h-screen bg-gray-100">
+//       {/* Sidebar */}
+//       <aside className="w-64 bg-white border-r shadow-md p-4 flex flex-col">
+//         <h2 className="text-xl font-bold mb-6 text-center text-blue-600">User Dashboard</h2>
+//         {menuItems.map((item) => (
+//           <button
+//             key={item.id}
+//             onClick={() => (item.id === "logout" ? handleLogout() : setActiveTab(item.id))}
+//             className={`text-left p-2 mb-2 rounded-md font-medium transition-all ${
+//               activeTab === item.id
+//                 ? "bg-blue-500 text-white"
+//                 : "hover:bg-gray-100 text-gray-700"
+//             }`}
+//           >
+//             {item.label}
+//           </button>
+//         ))}
+//       </aside>
+
+//       {/* Main Content */}
+//       <main className="flex-1 overflow-auto p-4">
+//         {tabComponents[activeTab] || <p className="text-gray-500">Select a section</p>}
+//       </main>
+//     </div>
+//   );
+// };
+
+// export default Profile;

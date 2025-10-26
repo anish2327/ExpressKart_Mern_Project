@@ -18,7 +18,7 @@ const app = express()
 app.use(express.json()); // ✅ This line is essential
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
     

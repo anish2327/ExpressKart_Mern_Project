@@ -6,7 +6,7 @@ const HomeCard = ({ name, image, category, price, loading,id }) => {
     <div className="bg-white shadow-md p-2 rounded min-w-[150px]">
       {name ? (
         <>
-        <Link to={`/menu/${id}`} onClick={()=>window.scrollTo({top:"0",behavior : "smooth"})} >
+        <Link to={"/menu/63f0fdbb3bcc2f97fa53d25d"} onClick={()=>window.scrollTo({top:"0",behavior : "smooth"})} >
           <div className="w-40 min-h-[150px]">
             <img src={image} className="h-full w-full" />
           </div>

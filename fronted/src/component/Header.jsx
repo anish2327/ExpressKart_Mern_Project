@@ -13,9 +13,9 @@ import Search from './Search';
 const Header = () => {
     const [showMenu, setShowMenu] = useState(false);
     const userData = useSelector((state) => state.user);
-     console.log("Header render - userData from Redux:", userData); // <-- yaha
-   const cartItemNumber = useSelector((state) => 
-  state.product.cartItem.reduce((total, item) => total + item.qty, 0)
+    // console.log("Header render - userData from Redux:", userData); // <-- yaha
+    const cartItemNumber = useSelector((state) => 
+    state.product.cartItem.reduce((total, item) => total + item.qty, 0)
 );
 
     const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const Header = () => {
     };
 
     const isAdmin = userData?.email === import.meta.env.VITE_APP_ADMIN_EMAIL;
-    console.log(isAdmin);
+    // console.log(isAdmin);
 
 
   return (
@@ -55,6 +55,8 @@ const Header = () => {
                         <Link to="/selectlocation"  className="hover:text-blue-600 text-orange-500">
                             Select Location📍
                         </Link>
+                       <Link to={"/menu/63f0fdbb3bcc2f97fa53d25d" } className=' hover:text-blue-600 text-orange-500'>Menu</Link>
+                       
                        
                         
                       
@@ -70,9 +72,17 @@ const Header = () => {
                     )}
                 </nav>
 
+                            <div className='flex md:hidden'>
+                                {!userData.email ? (
+                                    <Link to="login" className='text-orange-500 hover:text-blue-600'>Login</Link>
+                                ) : (
+                                    <button onClick={handleLogout} className='text-orange-500 hover:text-blue-600'>Logout</button>
+                                )}
+                            </div>
+
                 {/* Cart Icon */}
                 <div className=' text-orange-500 text-3xl hover:text-blue-600 text-slate-600 relative'>
-                    <Link to="cart">
+                    <Link to="cart" className='text-orange-400'>
                         <FaShoppingCart />
                         {cartItemNumber > 0 && (
                             <div className="absolute -top-1 -right-1 text-white bg-red-500 h-4 w-4 rounded-2xl text-sm text-center">
@@ -85,8 +95,8 @@ const Header = () => {
                 {/* User Profile */}
                 {userData?.email && (
                     <div className='relative'>
-                        <div className=' px-4 text-2xl cursor-pointer text-slate-600  hover:text-red-600' onClick={handleShowMenu}>
-                            <HiOutlineUserCircle />
+                        <div className=' px-4 text-2xl cursor-pointer text-orange-500 hover:text-red-600' onClick={handleShowMenu}>
+                           <HiOutlineUserCircle />
                            
                         </div>
                         <div className=' text-orange-600 text-center text-2xl'>
@@ -94,6 +104,7 @@ const Header = () => {
                                     to="profile"
                                     className='whitespace-nowrap cursor-pointer mb-2  text-orange-600  hover:text-red-600'
                                     onClick={() => setShowMenu(false)}
+                                    
                                 >
                                 Profile
                             </Link>
@@ -102,13 +113,6 @@ const Header = () => {
 
                         {showMenu && (
                             <div className='absolute right-0 bg-white py-2 px-2 shadow-md flex flex-col min-w-[150px]'>
-                                {/* <Link
-                                    to="profile"
-                                    className='whitespace-nowrap cursor-pointer mb-2 hover:text-red-600'
-                                    onClick={() => setShowMenu(false)}
-                                >
-                                    👤 Profile
-                                </Link> */}
 
                                 {isAdmin && (
                                     <Link
@@ -120,12 +124,7 @@ const Header = () => {
                                     </Link>
                                 )}
 
-                                {/* <button
-                                    onClick={handleLogout}
-                                    className='text-left text-red-600 hover:text-red-700'
-                                >
-                                    🚪 Logout
-                                </button> */}
+                
                             </div>
                         )}
                     </div>
