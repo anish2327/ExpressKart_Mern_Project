@@ -13,17 +13,28 @@ const razorpay = new Razorpay({
 });
 export const createOrder = async (req, res) => {
   try {
-    const { cartItems } = req.body;
+    const params = {
+      submit_type: "pay",
+      mode: "payment",
+      payment_method_types: ["card"],
+      billing_address_collection: "auto",
+      shipping_options: [{ shipping_rate: "shr_1SINbi2LQs9u2BU4qdieA7sv" }],
 
-    if (!cartItems || !cartItems.length) {
-      return res.status(400).json({ message: "Invalid or empty cart" });
-    }
+      line_items: req.body.map((item) => ({
+        price_data: {
+          currency: "inr",
+          product_data: { name: item.name },
+          unit_amount: item.price * 100,
+        },
+        adjustable_quantity: {
+          enabled: true,
+          minimum: 1,
+        },
+        quantity: item.qty,
+      })),
 
-    const totalAmount = cartItems.reduce((acc, item) => acc + item.price * item.qty, 0);
-    const options = {
-      amount: totalAmount * 100, // in paise
-      currency: "INR",
-      receipt: `receipt_${Date.now()}`,
+      success_url: `${process.env.FRONTEND_URL}/success`,
+      cancel_url: `${process.env.FRONTEND_URL}/cancel`,
     };
 
     const order = await razorpay.orders.create(options);
