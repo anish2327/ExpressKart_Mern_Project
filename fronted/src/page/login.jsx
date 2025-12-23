@@ -5,7 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch,  useSelector } from "react-redux";
 import { loginRedux } from "../redux/userSlice.js";
 import { toast } from "react-hot-toast";
-
+import reviewImage from "../assets/image_shopping_login.png";
+import onlineshopping from "../assets/online_shooping_cart.webp";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -62,25 +63,50 @@ const Login = () => {
   };
 
   return (
-    <div className="p-3 md:p-4">
-      <div className="w-full max-w-sm bg-white m-auto flex flex-col p-4 rounded-md shadow-md">
-        <div className="w-24 h-24 overflow-hidden rounded-full drop-shadow-md shadow-md m-auto">
-          <img src={loginSignupImage} alt="Login animation" className="w-full h-full object-cover" />
+    
+    <div  className="min-h-screen flex items-center justify-center bg-gradient-to-r from-orange-200 via-pink-50 to-rose-100">
+      
+    
+    
+    <div className="relative w-full max-w-5xl h-[80vh] rounded-2xl overflow-hidden shadow-2xl">
+
+    
+      <img
+        src={reviewImage} 
+        alt="Shopping Background"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      
+
+   
+      <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/60 to-transparent"></div>
+
+    
+      <div className="absolute right-10 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl w-full max-w-sm p-8">
+        <div className="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden shadow-md">
+          <img
+            src={loginSignupImage}
+            alt="Login animation"
+            className="w-full h-full object-cover"
+          />
         </div>
 
-        <form className="w-full py-3 flex flex-col" onSubmit={handleSubmit}>
-          <label htmlFor="email">Email</label>
+        <h1 className="text-center text-2xl text-orange-700 bold font-bold mt-4 ">Welcome Back </h1>
+        <p className="text-center"> Login to your account </p>
+
+        <form className="w-full  px-1 py-3 flex flex-col" onSubmit={handleSubmit}>
+          <label className="text-orange-700 font-bold" htmlFor="email"> 👤 Email</label>
           <input
             type="email"
             id="email"
             name="email"
-            placeholder="Enter your email"
+            placeholder="Enter your email or username"
             className="mt-1 mb-2 w-full bg-slate-200 px-2 py-1 rounded focus-within:outline-blue-300"
             value={data.email}
             onChange={handleOnChange}
           />
 
-          <label htmlFor="password">Password</label>
+          <label className="text-orange-700 font-bold" htmlFor="password">Password</label>
           <div className="flex px-2 py-1 bg-slate-200 rounded mt-1 mb-2 focus-within:outline focus-within:outline-blue-300">
             <input
               type={showPassword ? "text" : "password"}
@@ -95,6 +121,11 @@ const Login = () => {
               {showPassword ? <BiShow /> : <BiHide />}
             </span>
           </div>
+          <div className="text-end text-1/2xl">
+          <Link to="/forgotPassword" className="text-blue-800 underline font-semibold">
+          Forgot Password ?
+          </Link>
+          </div>
 
           <button
             type="submit"
@@ -104,14 +135,22 @@ const Login = () => {
           </button>
         </form>
 
-        <p className="text-left text-sm mt-2">
+        <p className="text-left  text-xl  mt-2">
           Don't have an account?{" "}
-          <Link to="/signup" className="text-red-500 underline">
+          <Link to="/signup" className="text-red-500 underline font-semibold ">
             Sign Up
           </Link>
         </p>
-      </div>
+      
     </div>
+    </div>
+   
+
+    </div>
+      
+       
+   
+       
   );
 };
 

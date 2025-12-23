@@ -32,7 +32,6 @@ const Header = () => {
     const isAdmin = userData?.email === import.meta.env.VITE_APP_ADMIN_EMAIL;
     // console.log(isAdmin);
 
-
   return (
    <header className="fixed shadow-md w-full h-16 px-2 md:px-4 z-50 bg-white">
         <div className="flex items-center h-full justify-between">
@@ -55,11 +54,7 @@ const Header = () => {
                         <Link to="/selectlocation"  className="hover:text-blue-600 text-orange-500">
                             Select Location📍
                         </Link>
-                       <Link to={"/menu/63f0fdbb3bcc2f97fa53d25d" } className=' hover:text-blue-600 text-orange-500'>Menu</Link>
-                       
-                       
-                        
-                      
+                       <Link to={"/menu/63f0fdbb3bcc2f97fa53d25d" } className=' hover:text-blue-600 text-orange-500'>Menu</Link>     
 
                     {/* Show login only if user not logged in */}
                    

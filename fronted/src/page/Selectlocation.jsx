@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import selectlocation from "../assets/select_location.jpg"
 
 const SelectLocation = () => {
   const [location, setLocation] = useState({
@@ -44,7 +45,7 @@ const SelectLocation = () => {
     e.preventDefault();
     const { country, state, city, houseNo, pincode } = location;
 
-    if (!country || !state || !city) {
+    if (!country || !state || !city  || !houseNO || !pincode) {
       alert("⚠️ Please select all fields before saving.");
       return;
     }
@@ -56,7 +57,28 @@ const SelectLocation = () => {
 
 
   return (
-    <div className="p-4 max-w-md mx-auto rounded-2xl shadow-md bg-white">
+    <div className="flex items-start justify-start ml-10 min-h-screen bg-gradient-to-r from-blue-200 via-pink-50 to-rose-100">
+  {/* Left side image */}
+  <div className="w-1/2 flex flex-col justify-start items-start ">
+  
+    <img 
+      src={selectlocation}
+      alt="select location"
+      className="rounded-2xl shadow-md mt-2 w-[90%] object-cover"
+    />
+      <p className="mt-6 text-2xl font-semibold text-gray-800 text-center">
+      🚀 Fast Delivery with <span className="text-orange-500">ExpressKart</span>
+    </p>
+      <div className=" mt-2 flex gap-3 bg-slate-200 w-36 px-2 items-center rounded-full">
+            <p className="mt-1  text-xl font-semibold text-gray-800 text-center">Bike Delivery</p>
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/2972/2972185.png"
+              className="h-12"
+            />
+        </div>
+  
+  </div>
+    <div className="w-1/3 p-6 rounded-2xl shadow-md bg-white ml-10 mt-2">
       <h2 className="text-xl font-bold text-gray-700 mb-3">Select Your Location</h2>
 
       {/* Country */}
@@ -144,6 +166,7 @@ const SelectLocation = () => {
           <strong>📍 Saved Location:</strong> {savedLocation}
         </div>
       )}
+    </div>
     </div>
   );
 };

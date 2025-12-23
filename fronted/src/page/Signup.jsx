@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate  } from 'react-router-dom';
 import { toast } from "react-hot-toast";
 import { ToastContainer } from 'react-toastify';
-
+import signupimage from "../assets/signup_page.jpg"
 
 
 function Signup() {
@@ -90,16 +90,34 @@ function Signup() {
   
 
   return (
-      <div className="p-3 md:p-4">
-        <div className="w-full max-w-sm bg-white m-auto flex  flex-col p-4">
-        {/* <h1 className='text-center text-2xl font-bold'>Sign up</h1> */}
-          <div className="w-20 h-20 overflow-hidden rounded-full drop-shadow-md shadow-md ">
+    <div className="flex min-h-screen bg-gradient-to-r from-orange-100 via-pink-50 to-rose-200 justify-center items-center p-86">
+      {/* Left side image */}
+      <div className="hidden md:flex w-1/2 justify-center ">
+      
+        <img 
+          src={signupimage}
+          alt="signup image"
+          className="rounded-2xl shadow-md mt-2 w-[90%] object-cover"
+        />
+          
+      
+      </div>
+      <div className="w-full md:w-1/2 flex justify-center">
+        <div className="w-full max-w-lg bg-white rounded-xl shadow-md p-8 flex flex-col items-center">
+         
+          <div className="w-20 h-20  overflow-hidden rounded-full drop-shadow-md shadow-md ">
             <img src={loginsignupImage}/>
+            
+            
           </div>
+          <h2 className="text-3xl font-extrabold text-orange-800 text-center">
+        Register New Account
+      </h2>
+      <p className="text-center text-xl text-gray-600 mb-6">Welcome to ExpressKart 🛍️</p>
 
 
           <form className="w-full py-3 flex flex-col"  onSubmit={handleSubmit}>
-            <label htmlFor="fullName">Full Name</label>
+            <label className="text-orange-700 font-bold" htmlFor="fullName">Full Name</label>
               <input
               type={"text"}
               id="fullName"
@@ -110,7 +128,7 @@ function Signup() {
               onChange={handleOnChange}
               />
 
-            <label htmlFor="email">Email</label>
+            <label  className="text-orange-700 font-bold" htmlFor="email">Email</label>
             <input
               type={"email"}
               id="email"
@@ -123,14 +141,14 @@ function Signup() {
             />
             {/* <Link to={"verifyemail"} className='text-red-500  whitespace-nowrap inline-block '>Verify Email</Link> */}
 
-            <label htmlFor="password">Password</label>
+            <label className="text-orange-700 font-bold" htmlFor="password">Password</label>
           <div className="flex px-2 py-1 bg-slate-200 rounded mt-1 mb-p focus-within:outline focus-within:outline-blue-300">
             <input
               type={showPassword ? "text" : "password"}
               id="password"
               name="password"
               placeholder='Enter your password'
-              className=" w-full bg-slate-200 border-none outline-none "
+               className=" w-full bg-slate-200 border-none outline-none "
               value={data.password}
               onChange={handleOnChange}
             />
@@ -140,7 +158,7 @@ function Signup() {
               {showPassword ? <BiShow /> : <BiHide />}</span>
             </div>
 
-            <label htmlFor="confirmpassword">Confirm Password</label>
+            <label className="text-orange-700 font-bold" htmlFor="confirmpassword">Confirm Password</label>
           <div className="flex px-2 py-1 bg-slate-200 rounded mt-1 mb-2  focus-within:outline focus-within:outline-blue-300">
             <input
               type={showConfirmPassword ? "text" : "password"}
@@ -155,20 +173,21 @@ function Signup() {
             <span  className="flex text-xl cursor-pointer"onClick={handleShowConfirmPassword}>
               {showConfirmPassword ? <BiShow /> : <BiHide />} </span>
             </div>
-            <button className="w-full max-w-[150px] m-auto  bg-red-500 hover:bg-red-600 cursor-pointer  text-white text-xl font-medium text-center py-1 rounded-full mt-4">
+            <button className="w-full max-w-[150px] m-auto  bg-orange-700  hover:bg-red-600 cursor-pointer  text-white text-xl font-medium text-center py-1 rounded-full mt-4">
             Sign up
           </button>
           </form>
-            <p className="text-left text-sm mt-2">
-          Already have account ?{" "}
-          <Link to={"/login"} className="text-red-500 underline">
-            Login
-          </Link>
-        </p>
+        <p className="text-center font-semibold text-gray-700 mt-5">
+        Already have an account?{" "}
+        <a href="/login" className="text-orange-700 hover:underline font-medium">
+          Login
+        </a>
+      </p>
 
         </div>
 
 
+    </div>
     </div>
   )
 }

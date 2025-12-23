@@ -22,6 +22,7 @@ import Success from './page/Success.jsx';
 import Cancel from './page/Cancel.jsx';
 import Selectlocation from './page/Selectlocation.jsx';
 import Profile from './page/Profile.jsx';
+import forget from './page/forget.jsx';
 
 import {
   createBrowserRouter,
@@ -48,11 +49,7 @@ const router = createBrowserRouter(
       <Route path="cancel" element={<Cancel/>}/>
       <Route path="selectlocation" element={<Selectlocation/>}/>
       <Route path ="profile" element={<Profile/>}/>
-
-
-      
-
-
+      <Route path="forgotPassword" element={<forget/>}/>
 
     </Route>
   )
