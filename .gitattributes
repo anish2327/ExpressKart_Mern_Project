@@ -1,0 +1,9 @@
+# Ignore build & static files from language stats
+frontend/build/* linguist-generated
+frontend/dist/* linguist-generated
+
+# Ignore HTML files
+*.html linguist-detectable=false
+
+# Count JavaScript properly
+*.js linguist-detectable=true
