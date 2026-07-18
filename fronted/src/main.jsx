@@ -24,6 +24,8 @@ import Selectlocation from './page/Selectlocation.jsx';
 import Profile from './page/Profile.jsx';
 import forget from './page/forget.jsx';
 
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -57,9 +59,11 @@ const router = createBrowserRouter(
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
- <Provider store={store}>
-    <RouterProvider router={router} />
-  </Provider>
+  <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  </GoogleOAuthProvider>
 );
 
 //reportWebVitals();

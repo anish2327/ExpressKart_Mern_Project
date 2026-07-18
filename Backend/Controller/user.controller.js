@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import userModel from '../model/User.model.js'; 
 import sendEmail from "../config/sendEmail.js";
+import { OAuth2Client } from "google-auth-library";
+
 
 import generateAccessToken from "../utils/generateAccesstoken.js";
 import generateRefreshToken from "../utils/generateRefreshtoken.js";
@@ -72,9 +74,90 @@ export async function registerUser(req, res){
 
         
     }
+  }
+// login user
+
+
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+export async function googleLoginController(req, res) {
+  try {
+    const { token } = req.body;
+
+    if (!token) {
+      return res.status(400).json({
+        message: "Google token missing",
+        error: true,
+        success: false,
+      });
+    }
+
+    // 1. Verify token with Google
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+    const { email, given_name, family_name, picture } = payload;
+
+    // 2. Find or create user
+    let user = await userModel.findOne({ email });
+
+    if (!user) {
+      user = await userModel.create({
+        email,
+        firstName: given_name || "",
+        lastName: family_name || "",
+        image: picture || "",
+        authProvider: "google",
+        // password field skip — Google users ko password nahi chahiye
+      });
+    }
+
+    // 3. Same token generation jaisa normal login mein hai
+    const accesstoken = await generateAccessToken(user._id);
+    const refreshtoken = await generateRefreshToken(user._id);
+
+    await userModel.findByIdAndUpdate(user._id, {
+      last_login_date: new Date(),
+    });
+
+    const cookiesOption = {
+      httpOnly: true,
+      secure: false, // local dev
+      sameSite: "Lax",
+    };
+
+    res.cookie("accessToken", accesstoken, cookiesOption);
+    res.cookie("refreshToken", refreshtoken, cookiesOption);
+
+    return res.json({
+      message: "Google login successfully",
+      error: false,
+      success: true,
+      data: {
+        user: {
+          _id: user._id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          image: user.image,
+        },
+        accesstoken,
+        refreshtoken,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
 }
 
-// login
+
 export async function loginUser(req, res) {
   try {
     const { email, password } = req.body;

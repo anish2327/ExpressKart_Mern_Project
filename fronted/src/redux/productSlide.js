@@ -59,7 +59,3 @@ export const {
 } = productSlice.actions;
 
 export default productSlice.reducer
-<<<<<<< HEAD
-=======
-
->>>>>>> dcf0c7acc9eb685b2cafbe9ae4f471c6be6f07b8
