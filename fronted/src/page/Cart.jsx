@@ -62,7 +62,9 @@ const Cart = () => {
   try {
     const orderRes = await fetch(`${import.meta.env.VITE_API_URL}/create-order`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+       },
       credentials: "include",
       body: JSON.stringify({ cartItems: productCartItem }), // ✅ fix
     });
@@ -78,7 +80,9 @@ const Cart = () => {
       handler: async (response) => {
         const verifyRes = await fetch(`${import.meta.env.VITE_API_URL}/verify-payment`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+          },
           credentials: "include", // ✅ fix
           body: JSON.stringify(response),
         });
