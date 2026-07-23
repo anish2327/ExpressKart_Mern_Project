@@ -13,16 +13,31 @@ dotenv.config();
 
 
 
-
-const app = express()
-app.use(express.json()); // ✅ This line is essential
+const allowedOrigins = [
+  "https://express-kart-mern-project-v7e5-anish-giris-projects-a2d0075e.vercel.app",
+  "https://express-kart-mern-project-v7e5-kyrofrf82.vercel.app",
+  "http://localhost:5173",
+];
 
 app.use(cors({
-    origin:  process.env.FRONTEND_URL,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+}));
+// const app = express()
+// app.use(express.json()); // ✅ This line is essential
+
+// app.use(cors({
+//     origin:  process.env.FRONTEND_URL,
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     credentials: true,
+//   })
+// );
 
 
 app.use(cookieParser())
