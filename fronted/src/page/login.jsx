@@ -92,9 +92,7 @@ const Login = () => {
         "Google Login Successful 🎉"
       );
 
-      setTimeout(() => {
-        navigate("/dashboard");
-      }, 1000);
+       setTimeout(() => navigate("/"), 1000);
     }
   } catch (error) {
     console.error(

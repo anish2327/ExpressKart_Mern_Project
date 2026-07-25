@@ -23,7 +23,8 @@ export const createOrder = async (req, res) => {
         success: false,
         message: "Cart is empty",
       });
-    }
+    } 
+   
 
     // Frontend already has total for each cart item
     const totalAmount = cartItems.reduce(
@@ -74,14 +75,14 @@ export const createOrder = async (req, res) => {
       currency: order.currency,
     });
   } catch (err) {
-    console.error("CREATE ORDER ERROR:", err);
+  console.error("CREATE ORDER ERROR:", err);
 
-    return res.status(500).json({
-      success: false,
-      message: "Order creation failed",
-      error: err.message,
-    });
-  }
+  return res.status(500).json({
+    success: false,
+    message: "Order creation failed",
+    error: err?.error?.description || err.message || "Unknown error",
+  });
+}
 };
 
 export const verifyPayment = async (req, res) => {
